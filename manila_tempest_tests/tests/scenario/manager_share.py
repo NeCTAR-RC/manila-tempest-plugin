@@ -148,9 +148,7 @@ class ShareScenarioTest(manager.NetworkScenarioTest):
             server_ip = self._get_ipv6_server_ip(instance)
         else:
             # Obtain a floating IP
-            floating_ip = (
-                self.compute_floating_ips_client.create_floating_ip()
-                ['floating_ip'])
+            floating_ip = self.create_floating_ip(instance)
             self.floating_ips[instance['id']] = floating_ip
             self.addCleanup(
                 test_utils.call_and_ignore_notfound_exc,
@@ -158,8 +156,8 @@ class ShareScenarioTest(manager.NetworkScenarioTest):
                 floating_ip['id'])
             # Attach a floating IP
             self.compute_floating_ips_client.associate_floating_ip_to_server(
-                floating_ip['ip'], instance['id'])
-            server_ip = floating_ip['ip']
+                floating_ip['floating_ip_address'], instance['id'])
+            server_ip = floating_ip['floating_ip_address']
         self.assertIsNotNone(server_ip)
         # Check ssh
         remote_client = self.get_remote_client(
@@ -317,8 +315,9 @@ class ShareScenarioTest(manager.NetworkScenarioTest):
             if self.ipv6_enabled:
                 server_ip = self._get_ipv6_server_ip(instance)
             else:
-                server_ip = (CONF.share.override_ip_for_nfs_access or
-                             self.floating_ips[instance['id']]['ip'])
+                server_ip = (
+                    CONF.share.override_ip_for_nfs_access or
+                    self.floating_ips[instance['id']]['floating_ip_address'])
             self.assertIsNotNone(server_ip)
             return self.allow_access_ip(
                 share['id'], ip=server_ip,
