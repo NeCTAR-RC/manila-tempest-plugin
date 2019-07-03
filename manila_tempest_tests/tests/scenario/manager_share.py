@@ -37,7 +37,7 @@ LOG = log.getLogger(__name__)
 class ShareScenarioTest(manager.NetworkScenarioTest):
     """Provide harness to do Manila scenario tests."""
 
-    credentials = ('admin', 'primary')
+    credentials = ('primary',)
     protocol = None
     ip_version = 4
 
@@ -54,8 +54,8 @@ class ShareScenarioTest(manager.NetworkScenarioTest):
         # Manila clients
         cls.shares_client = cls.os_primary.share_v1.SharesClient()
         cls.shares_v2_client = cls.os_primary.share_v2.SharesV2Client()
-        cls.shares_admin_client = cls.os_admin.share_v1.SharesClient()
-        cls.shares_admin_v2_client = cls.os_admin.share_v2.SharesV2Client()
+        # cls.shares_admin_client = cls.os_admin.share_v1.SharesClient()
+        # cls.shares_admin_v2_client = cls.os_admin.share_v2.SharesV2Client()
 
     @classmethod
     def skip_checks(cls):

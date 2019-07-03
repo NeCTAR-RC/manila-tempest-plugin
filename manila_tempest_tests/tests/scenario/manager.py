@@ -101,10 +101,10 @@ class NetworkScenarioTest(ScenarioTest):
     def _get_network_by_name_or_id(self, identifier):
 
         if uuidutils.is_uuid_like(identifier):
-            return self.os_admin.networks_client.show_network(
+            return self.os_primary.networks_client.show_network(
                 identifier)['network']
 
-        networks = self.os_admin.networks_client.list_networks(
+        networks = self.os_primary.networks_client.list_networks(
             name=identifier)['networks']
         self.assertNotEqual(len(networks), 0,
                             "Unable to get network by name: %s" % identifier)
