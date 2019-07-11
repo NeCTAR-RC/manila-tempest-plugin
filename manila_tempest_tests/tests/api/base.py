@@ -1206,13 +1206,13 @@ class BaseSharesMixedTest(BaseSharesTest):
     def setup_clients(cls):
         super(BaseSharesMixedTest, cls).setup_clients()
         # Initialise share clients
-        cls.admin_shares_client = cls.os_admin.share_v1.SharesClient()
-        cls.admin_shares_v2_client = cls.os_admin.share_v2.SharesV2Client()
-        cls.alt_shares_client = cls.os_alt.share_v1.SharesClient()
-        cls.alt_shares_v2_client = cls.os_alt.share_v2.SharesV2Client()
-        # Initialise network clients
-        cls.os_admin.networks_client = cls.os_admin.network.NetworksClient()
-        cls.os_alt.networks_client = cls.os_alt.network.NetworksClient()
+        # cls.admin_shares_client = cls.os_admin.share_v1.SharesClient()
+        # cls.admin_shares_v2_client = cls.os_admin.share_v2.SharesV2Client()
+        # cls.alt_shares_client = cls.os_alt.share_v1.SharesClient()
+        # cls.alt_shares_v2_client = cls.os_alt.share_v2.SharesV2Client()
+        # # Initialise network clients
+        # cls.os_admin.networks_client = cls.os_admin.network.NetworksClient()
+        # cls.os_alt.networks_client = cls.os_alt.network.NetworksClient()
 
         if CONF.share.multitenancy_enabled:
             admin_share_network_id = cls.provide_share_network(

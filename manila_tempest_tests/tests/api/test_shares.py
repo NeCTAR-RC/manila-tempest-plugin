@@ -27,6 +27,7 @@ CONF = config.CONF
 class SharesNFSTest(base.BaseSharesMixedTest):
     """Covers share functionality, that is related to NFS share type."""
     protocol = "nfs"
+    credentials = ('primary', )
 
     @classmethod
     def resource_setup(cls):
@@ -35,8 +36,8 @@ class SharesNFSTest(base.BaseSharesMixedTest):
             message = "%s tests are disabled" % cls.protocol
             raise cls.skipException(message)
         # create share_type
-        cls.share_type = cls._create_share_type()
-        cls.share_type_id = cls.share_type['id']
+        cls.share_type_id = CONF.share.default_share_type_name or \
+            cls._create_share_type()['id']
         # create share
         cls.share = cls.create_share(cls.protocol,
                                      share_type_id=cls.share_type_id)
