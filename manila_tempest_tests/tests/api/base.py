@@ -1274,24 +1274,6 @@ class BaseSharesMixedTest(BaseSharesAdminTest):
     @classmethod
     def setup_clients(cls):
         super(BaseSharesMixedTest, cls).setup_clients()
-        cls.alt_shares_client = cls.os_alt.share_v1.SharesClient()
-        cls.alt_shares_v2_client = cls.os_alt.share_v2.SharesV2Client()
-        # Initialise network clients
-        cls.os_admin.networks_client = cls.os_admin.network.NetworksClient()
-        cls.os_alt.networks_client = cls.os_alt.network.NetworksClient()
-        # Initialise identity clients
-        cls.admin_project = cls.os_admin.auth_provider.auth_data[1]['project']
-        identity_clients = getattr(
-            cls.os_admin, 'identity_%s' % CONF.identity.auth_version)
-        cls.os_admin.identity_client = identity_clients.IdentityClient()
-        cls.os_admin.projects_client = identity_clients.ProjectsClient()
-        cls.os_admin.users_client = identity_clients.UsersClient()
-        cls.os_admin.roles_client = identity_clients.RolesClient()
-        cls.os_admin.domains_client = (
-            cls.os_admin.identity_v3.DomainsClient() if
-            CONF.identity.auth_version == 'v3' else None)
-        cls.admin_project_member_client = cls.create_user_and_get_client(
-            project=cls.admin_project, add_member_role=True)
 
         if CONF.share.multitenancy_enabled:
             admin_share_network_id = cls.provide_share_network(

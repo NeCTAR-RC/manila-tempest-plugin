@@ -40,8 +40,11 @@ class SharesNFSTest(base.BaseSharesMixedTest):
     def resource_setup(cls):
         super(SharesNFSTest, cls).resource_setup()
         # create share_type
-        cls.share_type = cls.create_share_type()
-        cls.share_type_id = cls.share_type['id']
+        cls.share_type_id = CONF.share.default_share_type_name or \
+            cls._create_share_type()['id']
+        # create share
+        cls.share = cls.create_share(cls.protocol,
+                                     share_type_id=cls.share_type_id)
 
     @decorators.idempotent_id('21ad41fb-04cf-493c-bc2f-66c80220898b')
     @tc.attr(base.TAG_POSITIVE, base.TAG_BACKEND)
